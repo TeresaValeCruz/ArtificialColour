@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles_simple.css') }}">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&family=Rubik+Mono+One&display=swap" rel="stylesheet">
+  <title>Artificial Colour</title>
+  <style>
+    .material-symbols-rounded {
+      font-size: 36px;
+      text-align: center;
+      vertical-align: middle;
+      font-variation-settings:
+      'FILL' 1,
+      'wght' 700,
+      'GRAD' 0,
+      'opsz' 48
+    }
+    :root {
+      --c1: {{ col1 }};
+      --c2: {{ col2 }};
+      --c3: {{ col3 }};
+      --c4: {{ col4 }};
+      --c5: {{ col5 }};
+    }
+    .pattern {
+      --_g: radial-gradient(#0000 70%,var(--c1) 71%);
+      background:
+        /*var(--_g) calc(var(--s) - var(--gap)) calc(var(--s) - var(--gap)),
+        var(--_g) calc(var(--s)/2 - var(--gap)) calc(var(--s)/2 - var(--gap)),
+        conic-gradient(var(--c2) 25%,var(--c3) 0 50%,var(--c4) 0 75%,var(--c5) 0) calc(var(--s) - var(--gap)) calc(var(--s) - var(--gap));*/
+        var(--_g),
+        var(--_g) calc(var(--s)/2) calc(var(--s)/2),
+        conic-gradient(var(--c2) 25%,var(--c3) 0 50%,var(--c4) 0 75%,var(--c5) 0) var(--s) var(--s);
+        background-size: var(--s) var(--s);
+    }
+  </style>
+</head>
+<body>
+  <form method="POST">
+    <div class="header">
+      <div class="name" style=""><p>Random Colour</p></div>
+      <input type="submit" id="generate" class="material-symbols-rounded submit" value="refresh">
+<!--      <label for="generate">generate</label>-->
+    </div>
+    <div class="container">
+      <div class="palette">
+        <div class="swatch">
+          <input type="color" name="col1" value="{{ col1 }}">
+          <input type="checkbox" id="k1" name="lock1" {{'checked' if request.form.get('lock1') else ''}}>
+          <label class="material-symbols-rounded lock" for="k1"></label>
+        </div>
+        <div class="swatch">
+          <input type="color" name="col2" value="{{ col2 }}">
+          <input type="checkbox" id="k2" name="lock2" {{'checked' if request.form.get('lock2') else ''}}>
+          <label class="material-symbols-rounded lock" for="k2"></label>
+        </div>
+        <div class="swatch">
+          <input type="color" name="col3" value="{{ col3 }}">
+          <input type="checkbox" id="k3" name="lock3" {{'checked' if request.form.get('lock3') else ''}}>
+          <label class="material-symbols-rounded lock" for="k3"></label>
+        </div>
+        <div class="swatch">
+          <input type="color" name="col4" value="{{ col4 }}">
+          <input type="checkbox" id="k4" name="lock4" {{'checked' if request.form.get('lock4') else ''}}>
+          <label class="material-symbols-rounded lock" for="k4"></label>
+        </div>
+        <div class="swatch">
+          <input type="color" name="col5" value="{{ col5 }}">
+          <input type="checkbox" id="k5" name="lock5" {{'checked' if request.form.get('lock5') else ''}}>
+          <label class="material-symbols-rounded lock" for="k5"></label>
+        </div>
+      </div>
+      <div class="pattern">
+        <input type="button" id="like" class="material-symbols-rounded like" value="favorite" onclick="window.open(location.href='/info', '_blank');">
+      </div>
+    </div>
+  </form>
+</body>
+</html>

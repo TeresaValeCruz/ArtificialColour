@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1">
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles_new.css') }}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plaster&display=block" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+  <script src="https://unpkg.com/css-doodle@0.37.4/css-doodle.min.js"></script>
+  <title>Artificial Colour</title>
+  <style>
+    .material-symbols-sharp {
+    font-variation-settings:
+      'FILL' 1,
+      'wght' 700,
+      'GRAD' 200,
+      'opsz' 24
+    }
+    :root {
+      --c1: {{ col1 }};
+      --c2: {{ col2 }};
+      --c3: {{ col3 }};
+      --c4: {{ col4 }};
+      --c5: {{ col5 }};
+    }
+  </style>
+  <script>
+    function EnterFullScreen() {
+        document.getElementById("fullscreen").style.display="none";
+        document.documentElement.requestFullscreen();
+    }
+   </script>
+</head>
+<body>
+    <!--<div id="fullscreen" onclick="EnterFullScreen()" style="font-size: 8vmax; display: flex; justify-content: center; align-items: center;" class="material-symbols-sharp popup">
+        fullscreen
+    </div>-->
+
+    <css-doodle class="doodle-background">
+        :doodle {
+            @grid: 80x1 / 100vmax;
+        }
+
+        :container {
+            transform:
+            rotate(45deg) scale(4.6)
+            translate(-10%, -15%);
+        }
+
+        @place-cell: center;
+        @size: calc(100% - @calc(@index() -1 ) * 100% / @size());
+
+        transform: rotate(@rand(-2deg, 2deg, .1));
+        border-radius: @rand(28%, 35%, .1);
+        background: @pick(var(--c1), var(--c2), var(--c3), var(--c4), var(--c5));
+    </css-doodle>
+
+    <form method="POST" id="palette-form"></form>
+    <div class="content">
+        <div class="card shadow white">
+            <input type="color" class="swatch" name="col1" value="{{ col1 }}" form="palette-form">
+            <input type="checkbox" id="k1" name="lock1" form="palette-form" {{'checked' if request.form.get('lock1') else ''}}>
+            <label class="material-symbols-sharp lock" for="k1"></label>
+        </div>
+        <div class="card shadow white">
+            <input type="color" class="swatch" name="col2" value="{{ col2 }}" form="palette-form">
+            <input type="checkbox" id="k2" name="lock2" form="palette-form" {{'checked' if request.form.get('lock2') else ''}}>
+            <label class="material-symbols-sharp lock" for="k2"></label>
+        </div>
+        <div class="card shadow white">
+            <input type="color" class="swatch" name="col3" value="{{ col3 }}" form="palette-form">
+            <input type="checkbox" id="k3" name="lock3" form="palette-form" {{'checked' if request.form.get('lock3') else ''}}>
+            <label class="material-symbols-sharp lock" for="k3"></label>
+        </div>
+        <div class="card shadow white">
+            <input type="color" class="swatch" name="col4" value="{{ col4 }}" form="palette-form">
+            <input type="checkbox" id="k4" name="lock4" form="palette-form" {{'checked' if request.form.get('lock4') else ''}}>
+            <label class="material-symbols-sharp lock" for="k4"></label>
+        </div>
+        <div class="card shadow white">
+            <input type="color" class="swatch"  name="col5" value="{{ col5 }}" form="palette-form">
+            <input type="checkbox" id="k5" name="lock5" form="palette-form" {{'checked' if request.form.get('lock5') else ''}}>
+            <label class="material-symbols-sharp lock" for="k5"></label>
+        </div>
+    </div>
+    <div class="like"><input type="button" id="like" class="material-symbols-sharp submit" value="recommend" form="palette-form" onclick="window.open(location.href='/info', '_blank');" style="font-size: 5vmax; color: #EEE; filter: drop-shadow(1vmax 1vmax .5vmax rgba(4, 4, 4, 0.8));"  form="palette-form"></div>
+    <div class="footer shadow white">
+      <div class="name">
+        <span style="cursor: pointer;">ARTIFICIAL COLOUR</span>
+      <input type="submit" id="generate" class="material-symbols-sharp submit" value="refresh" style="font-size: 5vmax;" form="palette-form">
+      </div>
+    </div>
+</body>
+</html>
